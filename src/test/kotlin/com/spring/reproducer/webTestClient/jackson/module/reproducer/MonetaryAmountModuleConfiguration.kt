@@ -26,10 +26,9 @@ class MonetaryAmountModuleConfiguration {
     fun kotlinModule() = KotlinModule()
 
     @Bean
-    fun monetaryAmountSerializer(): Module = SimpleModule().addSerializer(MonetaryAmount::class.java, MonetaryAmountSerializer())
-
-    @Bean
-    fun monetaryAmountDeserializer(): Module = SimpleModule().addDeserializer(MonetaryAmount::class.java, MonetaryAmountDeserializer())
+    fun monetaryAmountModule(): Module = SimpleModule()
+            .addSerializer(MonetaryAmount::class.java, MonetaryAmountSerializer())
+            .addDeserializer(MonetaryAmount::class.java, MonetaryAmountDeserializer())
 }
 
 class MonetaryAmountSerializer : StdSerializer<MonetaryAmount>(MonetaryAmount::class.java) {

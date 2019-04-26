@@ -1,5 +1,6 @@
 package com.spring.reproducer.webTestClient.jackson.module.reproducer
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,7 +12,7 @@ import java.math.BigDecimal
 
 @SpringBootTest
 @AutoConfigureWebTestClient
-internal class UserControllerTest(@Autowired private val webTestClient: WebTestClient) {
+internal class UserControllerTest(@Autowired private val webTestClient: WebTestClient, @Autowired private val objecMapper: ObjectMapper) {
 
     @Test
     fun `find should find same user`() {
@@ -22,4 +23,5 @@ internal class UserControllerTest(@Autowired private val webTestClient: WebTestC
                 .exchange()
                 .expectBody<User>().isEqualTo(newUser)
     }
+
 }
