@@ -2,9 +2,10 @@ import org.gradle.kotlin.dsl.*
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.plugin.SpringBootPlugin.*
+import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.BIN
 
-val springCloudVersion by extra { "Greenwich.RELEASE" }
-val kotlinVersion = "1.3.21"
+val springCloudVersion by extra { "Greenwich.SR1" }
+val kotlinVersion = "1.3.31"
 
 buildscript {
     repositories {
@@ -15,10 +16,10 @@ buildscript {
 }
 
 plugins {
-    val kotlinVersion = "1.3.21"
+    val kotlinVersion = "1.3.31"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
-    id("org.springframework.boot") version "2.1.3.RELEASE"
+    id("org.springframework.boot") version "2.1.4.RELEASE"
 }
 
 apply {
@@ -52,6 +53,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
+    implementation("org.javamoney:moneta:1.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("io.rest-assured:spring-web-test-client")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -60,3 +63,8 @@ dependencies {
 }
 
 tasks.withType<Test> { useJUnitPlatform() }
+
+tasks.withType<Wrapper>().configureEach {
+    gradleVersion = "5.4"
+    distributionType = BIN
+}
